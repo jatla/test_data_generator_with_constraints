@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     ".rspec",
+    ".travis.yml",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
@@ -31,7 +32,8 @@ Gem::Specification.new do |s|
     "examples/sample_output.txt",
     "lib/test_data_generator_with_constraints.rb",
     "spec/spec_helper.rb",
-    "spec/test_data_generator_with_constraints_spec.rb"
+    "spec/test_data_generator_with_constraints_spec.rb",
+    "test_data_generator_with_constraints.gemspec"
   ]
   s.homepage = "http://github.com/jatla/test_data_generator_with_constraints"
   s.licenses = ["MIT"]

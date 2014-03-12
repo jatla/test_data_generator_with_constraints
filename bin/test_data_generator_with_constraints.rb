@@ -24,11 +24,12 @@ end
 
 parser.parse!
 
-outputFile = (options[:o].eql? nil) ? "temp.txt" : "#{options[:o]}"
-if options[:m] != nil
-	load "#{options[:m]}"
-else
-	puts "Not a valid option. See help!"
+if options[:m].nil?
+	puts parser
+	raise OptionParser::MissingArgument
 end
+
+load "#{options[:m]}"
+outputFile = (options[:o].nil?) ? "temp.txt" : "#{options[:o]}"
 
 TestDataGeneratorWithConstraints.instance.generate $dataModel, outputFile

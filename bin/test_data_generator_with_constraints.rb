@@ -6,7 +6,7 @@ options = {:m => nil, :o => nil}
 
 parser = OptionParser.new do |opts|
 
-	opts.banner = "Usage: cbtdg.rb [options] "
+	opts.banner = "Usage: test_data_generator_with_constraints.rb [options] "
 
 	opts.on('-m filePath', '--modelFilePath filePath', 'Path to file containing model and constaints. This is a required parameter.') do |filePath|
 		options[:m] = filePath

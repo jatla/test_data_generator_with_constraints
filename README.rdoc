@@ -2,7 +2,7 @@
 
 Among the various techniques to generate test data, combinatorial test generation using all-pairs(pairwise) methodology is one. This gem is an effort to apply pairwise methodology to hierarchical data models. Further goal is to have the ability to specify constraints and restrict the test data generated based on those constraints.
 
-Some references to pairwise testing literature if you want to know more:
+Some references to pairwise testing literature:
 
 * http://www.pairwise.org 
 * http://www.developsense.com/pairwiseTesting.html
@@ -90,6 +90,52 @@ Some references to pairwise testing literature if you want to know more:
     30. {:innermost1=>5, :innermost2=>false, :innermost3=>true, :inner2=>-1, :inner3=>2, :inner4=>false, :inner5=>true}
     31. {:innermost1=>5, :innermost2=>false, :innermost3=>true, :inner2=>-1, :inner3=>3, :inner4=>true, :inner5=>false}
     32. {:innermost1=>5, :innermost2=>false, :innermost3=>true, :inner2=>-1, :inner3=>3, :inner4=>false, :inner5=>true}
+
+* More on constraints
+
+    Observe that constraint is defined as ruby 'lambda'. 'constraints' of the data model is a hash 
+
+    complexConstraint = lambda {|t| t if ((t[:inner4] != t[:inner5]) && (t[:innermost2] != t[:innermost3]) && (t[:innermost1] > 3))}
+    $dataModel =
+    {
+        model:
+        {
+            .
+            .
+            .
+        },
+        constraints:
+        {
+            model: [complexConstraint]
+        }
+    }
+
+    The above complex constraint can be divided into multiple simple ones as follows resulting in the data model:
+
+    outerConstraint = lambda {|t| t if (t[:inner4] != t[:inner5])}
+    innerConstraint1 = lambda {|t| t if (t[:innermost2] != t[:innermost3])}
+    innerConstraint2 = lambda {|t| t if (&& (t[:innermost1] > 3)}
+
+    $dataModel =
+    {
+        model:
+        {
+            .
+            .
+            .
+        },
+        constraints:
+        {
+            inner1: [innerConstraint1, innerConstraint2],
+            outer2: [outerConstraint]
+        }
+    }
+
+    Observe that the key in the 'constraints' hash should be same as the key in 'model' where the constraints need to be applied.
+
+== TO DO
+
+* Support generating strings using Regexp
 
 == Contributing to test_data_generator_with_constraints
  

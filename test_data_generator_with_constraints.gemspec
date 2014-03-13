@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "test_data_generator_with_constraints"
-  s.version = "0.0.3"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["jatla"]
-  s.date = "2014-03-12"
+  s.date = "2014-03-13"
   s.description = "Given a model as ruby hash and constraints as ruby procs, test data is generated based on allpairs methodology and constraints applied to prune the data set"
   s.email = "jayaprakash.atla@gmail.com"
   s.executables = ["test_data_generator_with_constraints.rb"]

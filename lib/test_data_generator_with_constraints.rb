@@ -1,5 +1,6 @@
 require 'singleton'
 require 'pairwise'
+require 'sourcify'
 require 'pp'
 
 # Top level class used by cbtdg.rb commandline tool to traverse through
@@ -23,7 +24,7 @@ class TestDataGeneratorWithConstraints
 		if !outPutFilePath.nil?
 			outputFile = File.open(outPutFilePath, "w")
 			begin
-				writeToFile(outputFile, dataModelWithConstraints[:model], testTuples)
+				writeToFile(outputFile, dataModelWithConstraints, testTuples)
 			rescue IOError => e
 				puts e
 			ensure
@@ -68,6 +69,7 @@ private
 		elsif (data.is_a? Array) && (data[0].is_a? Regexp)
 			length = data[1].nil? ? 1 : data[1]
 			count = data[2].nil? ? 10 : data[2]
+			#generateRandomStringsFromRegEx(data[0], length, count)
 		else
 			data.to_a.collect{|a| [key,a]}
 		end
@@ -99,24 +101,23 @@ private
 
     def writeToFile(outputFile, dataModel, testTuples)
 		outputFile.write("MODEL:\n\n")
-    	PP.pp(dataModel, outputFile)
-		#outputFile.write(dataModel.to_s)
+    	PP.pp(dataModel[:model], outputFile)
 		outputFile.write("\n------------------------\n\n")
+		if (!@constraints.nil?)
+			outputFile.write("CONSTRAINTS:\n\n")
+			dataModel[:constraints].each do |k, v|
+				outputFile.write("#{k}:\n")
+				v.each do |c|
+					outputFile.write("\t#{c.to_source}:\n")
+				end
+    		end
+			outputFile.write("\n------------------------\n\n")
+		end
 		outputFile.write("GENERATED TEST DATA:\n\n")
 		testTuples.each_index do |i|
 			outputFile.write("#{i+1}. #{testTuples[i].to_s}\n")
 		end
 		outputFile.write("------------------------\n\n")
-
-		# outputFile.write("INTERMEDIATE DATA:\n\n")
-
-		# @pairWiseData.each do |k, v|
-		# 	outputFile.write("#{k} : \n")
-		# 	PP.pp(v, outputFile)
-		# 	outputFile.write("\n")
-		# 	#outputFile.write("#{k} : \n #{v.to_s}\n")
-		# end
-		# outputFile.write("------------------------\n\n")
     end
 
     # This is copied from the pairwise gem as the array of arrays
@@ -157,9 +158,9 @@ private
     	loop do
     		string =  (1..length).collect{rand(0..255).chr}.join
     		regex.match((1..length).collect{rand(0..255).chr}.join) {|m| strings << m.to_s if !m.nil?}
-    		break if (strings.count != count)
-    		#strings << string if string.match(regex)
+    		break if (strings.count == count)
     	end
+    	puts strings.to_s
     	strings
     end
 end

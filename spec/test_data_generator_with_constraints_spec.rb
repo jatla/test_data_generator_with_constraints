@@ -9,7 +9,7 @@ describe "TestDataGeneratorWithConstraints" do
   					model:
   					{
   						supply: (0..3),
-						demand: (0..3)
+						  demand: (0..3)
   					},
   					constraints: {}
 				}
@@ -23,7 +23,7 @@ describe "TestDataGeneratorWithConstraints" do
   					model:
   					{
   						supply: (0..3),
-						demand: (0..3)
+						  demand: (0..3)
   					},
 					constraints:
 					{

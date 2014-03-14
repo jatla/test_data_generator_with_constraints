@@ -3,6 +3,7 @@ source "http://rubygems.org"
 # Example:
 #   gem "activesupport", ">= 2.3.5"
 gem "pairwise", "~> 0.2.1"
+gem "sourcify", "~> 0.5.0"
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development do
@@ -12,4 +13,5 @@ group :development do
   gem "jeweler", "~> 2.0.1"
   gem "simplecov", ">= 0"
   gem "pairwise", "~> 0.2.1"
+  gem "sourcify", "~> 0.5.0"
 end
